@@ -1,4 +1,4 @@
-package com.ianhanniballake.localstorage;
+package com.volkhart.localstorage;
 
 import android.content.res.AssetFileDescriptor;
 import android.database.Cursor;
@@ -6,6 +6,7 @@ import android.database.MatrixCursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.os.Build;
 import android.os.CancellationSignal;
 import android.os.Environment;
 import android.os.ParcelFileDescriptor;
@@ -13,7 +14,6 @@ import android.os.StatFs;
 import android.provider.DocumentsContract.Document;
 import android.provider.DocumentsContract.Root;
 import android.provider.DocumentsProvider;
-import android.support.v4.os.EnvironmentCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
@@ -27,7 +27,7 @@ public class LocalStorageProvider extends DocumentsProvider {
     /**
      * Authority that matches the authority in the AndroidManifest.xml for LocalStorageProvider
      */
-    public final static String AUTHORITY = "com.ianhanniballake.localstorage.documents";
+    public final static String AUTHORITY = "com.volkhart.localstorage.documents";
     /**
      * Default root projection: everything but Root.COLUMN_MIME_TYPES
      */
@@ -63,7 +63,12 @@ public class LocalStorageProvider extends DocumentsProvider {
         }
         // Add SD card directory
         File sdCard = new File("/storage/extSdCard");
-        String storageState = EnvironmentCompat.getStorageState(sdCard);
+        String storageState;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            storageState = Environment.getExternalStorageState(sdCard);
+        } else {
+            storageState = Environment.getStorageState(sdCard);
+        }
         if (TextUtils.equals(storageState, Environment.MEDIA_MOUNTED) ||
                 TextUtils.equals(storageState, Environment.MEDIA_MOUNTED_READ_ONLY)) {
             final MatrixCursor.RowBuilder row = result.newRow();

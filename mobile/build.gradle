@@ -8,16 +8,16 @@ android {
         minSdkVersion 19
         targetSdkVersion rootProject.ext.targetSdkVersion
 
-        versionCode 6
-        versionName "2.0"
+        versionCode 1
+        versionName "1"
     }
 
     signingConfigs {
         release {
-            storeFile System.getenv("KEYSTORE") != null ? file(System.getenv("KEYSTORE")) : null
-            storePassword System.getenv("KEYSTORE_PASSWORD")
-            keyAlias System.getenv("LOCAL_STORAGE_ALIAS")
-            keyPassword System.getenv("LOCAL_STORAGE_PASSWORD")
+            storeFile file(LOCAL_STORAGE_RELEASE_STORE_FILE)
+            storePassword LOCAL_STORAGE_RELEASE_STORE_PASSWORD
+            keyAlias LOCAL_STORAGE_RELEASE_KEY_ALIAS
+            keyPassword LOCAL_STORAGE_RELEASE_KEY_PASSWORD
         }
     }
 
@@ -28,8 +28,4 @@ android {
             signingConfig signingConfigs.release
         }
     }
-}
-
-dependencies {
-    compile "com.android.support:appcompat-v7:22.1.0"
 }
