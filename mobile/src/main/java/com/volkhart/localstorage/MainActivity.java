@@ -1,6 +1,7 @@
 package com.volkhart.localstorage;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -22,7 +23,12 @@ public class MainActivity extends Activity {
             case RC_OPEN_DOCUMENT:
                 if (resultCode == RESULT_OK) {
                     data.setAction(Intent.ACTION_VIEW);
-                    startActivity(data);
+                    try {
+                        startActivity(data);
+                    } catch (ActivityNotFoundException e) {
+                        data.setAction(Intent.ACTION_SEND);
+                        startActivity(data);
+                    }
                 }
                 finish();
                 break;

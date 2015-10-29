@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Local Storage</string>
+    <string name="app_name">Open File</string>
     <string name="home">Home</string>
     <string name="sd_card">SD Card</string>
     <string name="title_delete">Delete File</string>
-    <string name="deleted">Deleted the file</string>
+    <string name="deleted">File deleted</string>
+    <string name="delete_failed">This provider doesn\'t support deletion</string>
 </resources>
